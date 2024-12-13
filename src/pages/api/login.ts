@@ -12,7 +12,7 @@ const endpointLogin = async (
 ) => {
   const { MINHA_CHAVE_JWT } = process.env;
   if (!MINHA_CHAVE_JWT)
-    res.status(500).json({ msg: "ENV JWT nao foi informada" });
+    res.status(500).json({ erro: "ENV JWT nao foi informada" });
 
   if (req.method === "POST") {
     const { login, senha } = req.body;

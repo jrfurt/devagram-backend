@@ -1,10 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { respostaPadraoMsg } from "../../../types/respostaPadraoMsg";
+import { RespostaPadraoMsg } from "../../../types/RespostaPadraoMsg";
 import { CadastroRequisicao } from "../../../types/CadastroRequisicao";
+import { UsuarioModel } from "@/models/UsuarioModel";
+import { conectarMongoDB } from "../../../middlewares/conectarMongoDB";
+import md5 from "md5";
 
-const endpointCadastro = (
+const endpointCadastro = async (
   req: NextApiRequest,
-  res: NextApiResponse<respostaPadraoMsg>
+  res: NextApiResponse<RespostaPadraoMsg>
 ) => {
   if (req.method === "POST") {
     const usuario = req.body as CadastroRequisicao;
@@ -26,10 +29,27 @@ const endpointCadastro = (
       return res.status(400).json({ erro: "Senha invalida" });
     }
 
-    return res.status(200).json({ msg: "Dados corretos" });
+    const usuarioComMesmoEmail = await UsuarioModel.find({
+      email: usuario.email
+    });
+    if (usuarioComMesmoEmail && usuarioComMesmoEmail.length > 0) {
+      return res
+        .status(400)
+        .json({ erro: "Ja existe usuario com este email cadastrado" });
+    }
+
+    // Usuário salvo com a senha criptografada
+    const usuarioASerSalvo = {
+      nome: usuario.nome,
+      email: usuario.email,
+      senha: md5(usuario.senha)
+    };
+
+    await UsuarioModel.create(usuarioASerSalvo);
+    return res.status(201).json({ msg: "Dados corretos" });
   }
 
   return res.status(500).json({ erro: "Metodo informado nao e valido" });
 };
 
-export default endpointCadastro;
+export default conectarMongoDB(endpointCadastro);

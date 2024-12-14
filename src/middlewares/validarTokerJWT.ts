@@ -1,5 +1,5 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { RespostaPadraoMsg } from "../../types/RespostaPadraoMsg";
+import { RespostaPadraoMsg } from "../types/RespostaPadraoMsg";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
 export const validarTokerJWT =

@@ -54,7 +54,7 @@ const handler = nextConnect()
         await UsuarioModel.create(usuarioASerSalvo);
         return res.status(201).json({ msg: "Dados corretos" });
       } catch (error) {
-        console.error(error);
+        return res.status(500).json({ erro: "Erro ao cadastrar usuario" });
       }
     }
   );

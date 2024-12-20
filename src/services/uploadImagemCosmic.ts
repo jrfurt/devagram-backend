@@ -13,23 +13,32 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 const uploadImagemCosmic = async (req: any) => {
-  if (req?.file?.originalname) {
-    const mediaObject = {
-      originalname: req.file.originalname,
-      buffer: req.file.buffer
-    };
+  try {
+    if (req?.file?.originalname) {
+      const mediaObject = {
+        originalname: req.file.originalname,
+        buffer: req.file.buffer
+      };
 
-    if (req.url && req.url.includes("publicacao")) {
-      return await bucketDevagram.media.insertOne({
-        media: mediaObject,
-        folder: "publicacao"
-      });
+      if (req.url && req.url.includes("publicacao")) {
+        return await bucketDevagram.media.insertOne({
+          media: mediaObject,
+          folder: "publicacao"
+        });
+      } else if (req.url && req.url.includes("cadastro")) {
+        return await bucketDevagram.media.insertOne({
+          media: mediaObject,
+          folder: "avatar"
+        });
+      } else {
+        return "Endpoint não encontrado";
+      }
     } else {
-      return await bucketDevagram.media.insertOne({
-        media: mediaObject,
-        folder: "avatar"
-      });
+      throw new Error("Arquivo inválido ou ausente.");
     }
+  } catch (error) {
+    console.error("Erro no uploadImagemCosmic:", error);
+    return null;
   }
 };
 

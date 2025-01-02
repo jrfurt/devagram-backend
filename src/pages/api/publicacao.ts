@@ -56,4 +56,4 @@ const handler = nextConnect()
   });
 
 export const config = { api: { bodyParser: false } };
-export default conectarMongoDB(validarTokerJWT(handler));
+export default validarTokerJWT(conectarMongoDB(handler));

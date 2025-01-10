@@ -25,13 +25,11 @@ const uploadImagemCosmic = async (req: any) => {
           media: mediaObject,
           folder: "publicacao"
         });
-      } else if (req.url && req.url.includes("cadastro")) {
+      } else {
         return await bucketDevagram.media.insertOne({
           media: mediaObject,
           folder: "avatar"
         });
-      } else {
-        return "Endpoint não encontrado";
       }
     } else {
       throw new Error("Arquivo inválido ou ausente.");

@@ -9,4 +9,5 @@ const usuarioSchema = new Schema({
   seguindo: { type: Number, default: 0 }
 });
 
-export const UsuarioModel = mongoose.models.Usuario || mongoose.model("Usuario", usuarioSchema);
+export const UsuarioModel =
+  mongoose.models.Usuario || mongoose.model("Usuario", usuarioSchema);

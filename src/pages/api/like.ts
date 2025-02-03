@@ -1,4 +1,5 @@
 import { conectarMongoDB } from "@/middlewares/conectarMongoDB";
+import { politicaDeCors } from "@/middlewares/politicaDeCors";
 import { validarTokerJWT } from "@/middlewares/validarTokerJWT";
 import { PublicacaoModel } from "@/models/PublicacaoModel";
 import { UsuarioModel } from "@/models/UsuarioModel";
@@ -48,4 +49,4 @@ const endpointLike = async (
   }
 };
 
-export default validarTokerJWT(conectarMongoDB(endpointLike));
+export default politicaDeCors(validarTokerJWT(conectarMongoDB(endpointLike)));

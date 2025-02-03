@@ -6,6 +6,7 @@ import { validarTokerJWT } from "@/middlewares/validarTokerJWT";
 import { conectarMongoDB } from "@/middlewares/conectarMongoDB";
 import { PublicacaoModel } from "@/models/PublicacaoModel";
 import { UsuarioModel } from "@/models/UsuarioModel";
+import { politicaDeCors } from "@/middlewares/politicaDeCors";
 
 const handler = nextConnect()
   .use(upload.single("file"))
@@ -59,4 +60,4 @@ const handler = nextConnect()
   });
 
 export const config = { api: { bodyParser: false } };
-export default validarTokerJWT(conectarMongoDB(handler));
+export default politicaDeCors(validarTokerJWT(conectarMongoDB(handler)));

@@ -6,6 +6,7 @@ import { conectarMongoDB } from "../../middlewares/conectarMongoDB";
 import md5 from "md5";
 import nextConnect from "next-connect";
 import { upload, uploadImagemCosmic } from "@/services/uploadImagemCosmic";
+import { politicaDeCors } from "@/middlewares/politicaDeCors";
 
 const handler = nextConnect()
   .use(upload.single("file"))
@@ -62,4 +63,4 @@ const handler = nextConnect()
 // por conta da mídia enviada no form, o padrão de envio das infos não pode ser json
 // por isso nessa  API desativa o body parser
 export const config = { api: { bodyParser: false } };
-export default conectarMongoDB(handler);
+export default politicaDeCors(conectarMongoDB(handler));

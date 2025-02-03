@@ -5,6 +5,7 @@ import type { LoginResposta } from "../../types/LoginResposta";
 import { UsuarioModel } from "@/models/UsuarioModel";
 import md5 from "md5";
 import jwt from "jsonwebtoken";
+import { politicaDeCors } from "@/middlewares/politicaDeCors";
 
 const endpointLogin = async (
   req: NextApiRequest,
@@ -40,4 +41,4 @@ const endpointLogin = async (
 };
 
 // Ao exportar, primeiro é chamada a função (middleware) pra saber se está conectado ao DB
-export default conectarMongoDB(endpointLogin);
+export default politicaDeCors(conectarMongoDB(endpointLogin));

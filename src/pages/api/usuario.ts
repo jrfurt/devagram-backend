@@ -1,4 +1,5 @@
 import { conectarMongoDB } from "@/middlewares/conectarMongoDB";
+import { politicaDeCors } from "@/middlewares/politicaDeCors";
 import { validarTokerJWT } from "@/middlewares/validarTokerJWT";
 import { UsuarioModel } from "@/models/UsuarioModel";
 import { upload, uploadImagemCosmic } from "@/services/uploadImagemCosmic";
@@ -59,4 +60,4 @@ const handler = nextConnect()
 
 export const config = { api: { bodyParser: false } };
 
-export default validarTokerJWT(conectarMongoDB(handler));
+export default politicaDeCors(validarTokerJWT(conectarMongoDB(handler)));

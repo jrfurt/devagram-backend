@@ -1,4 +1,5 @@
 import { conectarMongoDB } from "@/middlewares/conectarMongoDB";
+import { politicaDeCors } from "@/middlewares/politicaDeCors";
 import { validarTokerJWT } from "@/middlewares/validarTokerJWT";
 import { UsuarioModel } from "@/models/UsuarioModel";
 import { RespostaPadraoMsg } from "@/types/RespostaPadraoMsg";
@@ -31,4 +32,4 @@ const endpointPesquisa = async (
   }
 };
 
-export default validarTokerJWT(conectarMongoDB(endpointPesquisa));
+export default politicaDeCors(validarTokerJWT(conectarMongoDB(endpointPesquisa)));
